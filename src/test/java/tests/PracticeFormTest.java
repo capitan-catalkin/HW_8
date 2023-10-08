@@ -1,3 +1,6 @@
+package tests;
+
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -5,13 +8,32 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormTest {
+    SelenideElement firstNameInput = $("#firstName");
+
+    public void setFirstName (String value){
+        firstNameInput.setValue(value);
+    }
+
+    public void clickFirstName(){
+        firstNameInput.click();
+    }
+
     @Test
     void fillFormTest(){
         open("/automation-practice-form");
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");   //убирает банеры со страницы которые мешают нажатию кнопок
 
-        $("#firstName").setValue("Sergey");
+
+
+        firstNameInput.setValue("Sergey");
+        firstNameInput.click();
+
+        setFirstName("Sergey");
+        clickFirstName();
+
+
+
         $("#lastName").setValue("Esenin");
         $("#userEmail").setValue("esenin@mail.ru");
         $("#genterWrapper").$(byText("Male")).click();
