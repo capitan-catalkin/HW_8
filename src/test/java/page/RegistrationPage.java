@@ -6,17 +6,18 @@ import page.components.CalendarComponent;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 public class RegistrationPage {
 
     ///SelenideElements
     CalendarComponent calendar = new CalendarComponent();
+
     SelenideElement firstNameInput = $("#firstName"),
             lastNameInput =  $("#lastName"),
             userEmailInput =  $("#userEmail"),
             genderWrapper = $("#genterWrapper"),
             userNumberInput = $("#userNumber"),
+            userDateOfBirth = $("#dateOfBirthInput"),
             subjectsInput =  $("#subjectsInput"),
             hobbiesInput = $("#hobbiesWrapper"),
             loadFile = $("#uploadPicture"),
@@ -24,15 +25,20 @@ public class RegistrationPage {
             stateInput = $("#state"),
             stateCityWrapper = $("#stateCity-wrapper"),
             cityInput = $("#city"),
-            submitButton = $("#submit");
+            submitButton = $("#submit"),
+            responsive = $(".table-responsive");
 
 
     ///Actions
     public RegistrationPage openPage(){
         open("/automation-practice-form");
+        return  this;
+    }
+
+    public RegistrationPage closeBanner() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
-        return  this;
+        return this;
     }
 
     public RegistrationPage setFirstName(String value) {
@@ -40,10 +46,6 @@ public class RegistrationPage {
         return  this;
     }
 
-    public RegistrationPage clickFirstName() {
-        firstNameInput.click();
-        return  this;
-    }
 
     public RegistrationPage setLastName(String value) {
         lastNameInput.setValue(value);
@@ -66,8 +68,8 @@ public class RegistrationPage {
     }
 
     public RegistrationPage setDateOfBirth(String day, String month, String year) {
-        $("#dateOfBirthInput").click();
-        calendar.setDate("21", "September", "1900");
+        userDateOfBirth.click();
+        calendar.setDate(day, month, year);
         return  this;
     }
 
@@ -109,7 +111,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage checkResult(String key, String value) {
-        $(".table-responsive").$(byText(key)).parent()
+        responsive.$(byText(key)).parent()
                 .shouldHave(text(value));
         return  this;
     }

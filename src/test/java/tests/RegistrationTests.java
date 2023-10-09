@@ -13,6 +13,7 @@ public class RegistrationTests extends TestBase{
     void fillFormTest(){
 
         registrationPage.openPage()
+                        .closeBanner()
                         .setFirstName("Sergey")
                         .setLastName("Esenin")
                         .setEmail("esenin@mail.ru")
